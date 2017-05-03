@@ -47,16 +47,42 @@ bool Win(int A, bool player) {
     return 0;
 }
 
+void Answer(int *ans){
+    int tmp[4], num=0;
+    bool add;
+    for(int i=0; i<4; i++) {
+        add=true;
+        tmp[i]=rand()%10;
+        if(tmp[i]==0) {
+            i--;
+            continue;
+        }
+        for(int j=0; j<i; j++){
+            if(tmp[i]==tmp[j]) {
+                add=false;
+                i--;
+                break;
+            }
+        }
+        if(add)
+            num+=tmp[i]*(pow(10.0, 3-i));
+    }
+    *ans=num;
+}
+
 int main(void) {
+    srand(time(NULL));
     int ans;
-    cin>>ans;
+    Answer(&ans);
+    //cout<<ans;
+    //cin>>ans;
     cout<<"** Bulls & Cows **\n";
     cout<<"Rule: Now you are compete with your computer\n";
     cout<<"      Enter number: 1~9\n";
     cout<<"      Please enter 4-digits each time\n";
     int pGuess, cGuess, A=0, B=0, round=0, rSame=0,
     Record[9]={0}, RecordA[9]={0}, RecordB[9]={0};
-
+    
     for(cGuess=1234;cGuess<=9876;cGuess++) {
         rSame=0;
         if(DigitCheck(cGuess)) {
@@ -90,4 +116,3 @@ int main(void) {
     }
     return 0;
 }
-
